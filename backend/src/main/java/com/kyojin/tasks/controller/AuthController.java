@@ -3,6 +3,7 @@ package com.kyojin.tasks.controller;
 import com.kyojin.tasks.dto.request.LoginRequest;
 import com.kyojin.tasks.dto.response.UserDTO;
 import com.kyojin.tasks.service.AuthService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,7 +19,7 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/login")
-    public ResponseEntity<UserDTO> login(@RequestBody LoginRequest request) {
+    public ResponseEntity<UserDTO> login(@Valid @RequestBody LoginRequest request) {
         UserDTO responseDTO = authService.login(request);
         return ResponseEntity.ok(responseDTO);
     }
