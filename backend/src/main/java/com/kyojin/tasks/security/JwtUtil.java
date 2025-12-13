@@ -43,6 +43,10 @@ public class JwtUtil {
     public String generateJwt(Authentication authentication) {
         var userPrincipal = (UserDetails) authentication.getPrincipal();
 
+        if (userPrincipal == null) {
+            throw new IllegalArgumentException("User principal cannot be null");
+        }
+
         String roles = userPrincipal.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
