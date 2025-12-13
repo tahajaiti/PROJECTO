@@ -43,6 +43,10 @@ public class JwtUtil {
     public String generateJwt(Authentication authentication) {
         var userPrincipal = (UserDetails) authentication.getPrincipal();
 
+        if (!(userPrincipal instanceof UserPrincipal)) {
+            throw new IllegalArgumentException("Authentication principal is not of type UserPrincipal");
+        }
+
         String roles = userPrincipal.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
