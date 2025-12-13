@@ -6,9 +6,11 @@ spring:
 
 app:
   jwt:
+    parser: bearer
     secret-key: ${JWT_SECRET_KEY}
     expiration-ms: ${JWT_EXPIRATION_MS:1200000}
     issuer: ${JWT_ISSUER_NAME:tasks-app}
+    cookie-name: ${JWT_COOKIE_NAME:tasks-jwt}
   security:
     role-prefix: ${SECURITY_ROLE_PREFIX:ROLE_}
     bcrypt-strength: ${SECURITY_BCRYPT_STRENGTH:10}
