@@ -1,4 +1,8 @@
 spring:
+  config:
+    activate:
+      on-profile: dev
+
   datasource:
     url: ${SPRING_DATASOURCE_URL}
     username: ${SPRING_DATASOURCE_USERNAME}
@@ -13,3 +17,12 @@ spring:
     properties:
       hibernate:
         format_sql: ${SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL:true}
+
+logging:
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %clr(%-5level) %clr(%logger{36}){cyan} - %msg%n"
+  level:
+    com.kyojin.packagito: DEBUG
+    org.springframework.data.mongodb.core.MongoTemplate: DEBUG
+    org.springframework.web: DEBUG
+    org.springframework.security: DEBUG
