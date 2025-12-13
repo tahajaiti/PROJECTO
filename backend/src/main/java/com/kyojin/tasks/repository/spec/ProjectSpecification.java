@@ -1,6 +1,6 @@
 package com.kyojin.tasks.repository.spec;
 
-import com.kyojin.tasks.dto.request.ProjectFilterDTO;
+import com.kyojin.tasks.dto.filter.ProjectFilterDTO;
 import com.kyojin.tasks.entity.Project;
 import jakarta.persistence.criteria.Predicate;
 import org.springframework.data.jpa.domain.Specification;

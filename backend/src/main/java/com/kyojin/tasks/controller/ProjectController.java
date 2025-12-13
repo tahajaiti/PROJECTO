@@ -2,7 +2,7 @@ package com.kyojin.tasks.controller;
 
 import com.kyojin.tasks.core.annotation.AuthUser;
 import com.kyojin.tasks.dto.request.CreateProjectRequest;
-import com.kyojin.tasks.dto.request.ProjectFilterDTO;
+import com.kyojin.tasks.dto.filter.ProjectFilterDTO;
 import com.kyojin.tasks.dto.request.UpdateProjectRequest;
 import com.kyojin.tasks.dto.response.ProjectDTO;
 import com.kyojin.tasks.security.UserPrincipal;

@@ -1,4 +1,4 @@
-package com.kyojin.tasks.dto.request;
+package com.kyojin.tasks.dto.filter;
 
 import lombok.Data;
 

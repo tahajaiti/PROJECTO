@@ -2,7 +2,7 @@ package com.kyojin.tasks.service.impl;
 
 import com.kyojin.tasks.core.exception.NotFoundException;
 import com.kyojin.tasks.dto.request.CreateProjectRequest;
-import com.kyojin.tasks.dto.request.ProjectFilterDTO;
+import com.kyojin.tasks.dto.filter.ProjectFilterDTO;
 import com.kyojin.tasks.dto.request.UpdateProjectRequest;
 import com.kyojin.tasks.dto.response.ProjectDTO;
 import com.kyojin.tasks.entity.Project;
