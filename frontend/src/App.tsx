@@ -1,7 +1,15 @@
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+import { RouterProvider } from "react-router-dom"
+import { router } from "./router"
+
+const queryClient = new QueryClient()
+
 
 const App = () => {
   return (
-    <div className="bg-red-500">App</div>
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router} />
+    </QueryClientProvider>
   )
 }
 
