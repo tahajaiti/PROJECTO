@@ -37,7 +37,7 @@ const LoginPage = () => {
 
       {error && (
         <div className="bg-red-500/10 border border-red-500/30 text-red-400 p-3 rounded-lg mb-6 text-center text-sm">
-          {error.message || "Login failed"}
+          {error.message || "Login failed, try again later."}
         </div>
       )}
 
