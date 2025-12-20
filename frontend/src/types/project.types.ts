@@ -1,17 +1,17 @@
 export interface Project {
-  id?: number;
+  id: number;
   
   title: string;
   description?: string;
 
   userId: number;
 
-  totalTasks?: number;
-  completedTasks?: number;
-  progressPercentage?: number;
+  totalTasks: number;
+  completedTasks: number;
+  progressPercentage: number;
 
-  createdAt?: string;
-  updatedAt?: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface CreateProjectRequest {
@@ -22,4 +22,8 @@ export interface CreateProjectRequest {
 export interface UpdateProjectRequest {
   title?: string;
   description?: string;
+}
+
+export interface ProjectFilter {
+  query?: string;
 }
