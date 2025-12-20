@@ -24,7 +24,14 @@ public class UserSeeder implements CommandLineRunner {
             user.setEmail("taha@admin.com");
             user.setPassword(passwordEncoder.encode("password123"));
 
+            User user2 = new User();
+            user2.setName("Taha two");
+            user2.setEmail("taha2@admin.com");
+            user2.setPassword(passwordEncoder.encode("password123"));
+
+
             userRepository.save(user);
+            userRepository.save(user2);
 
             log.info("User Seeder: Default user created successfully.");
         }
