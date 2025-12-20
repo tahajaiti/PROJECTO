@@ -3,7 +3,6 @@ import { config } from "../config";
 import { ErrorResponse } from "../types";
 import { useAuthStore } from "../stores/authStore";
 
-
 const api = axios.create({
   baseURL: config.api.url,
   timeout: config.api.timeout,
@@ -14,8 +13,8 @@ const api = axios.create({
 
 api.interceptors.request.use(
   (cfg: InternalAxiosRequestConfig) => {
-    const token = localStorage.getItem(config.auth.tokenKey);
-    
+    const token = useAuthStore.getState().token;
+
     if (token) {
       cfg.headers.Authorization = `Bearer ${token}`;
     }
@@ -32,11 +31,15 @@ api.interceptors.response.use(
   (error: AxiosError<ErrorResponse>) => {
     const status = error.response?.status;
 
+    let code: "UNAUTHORIZED" | "FORBIDDEN" | "UNKNOWN" = "UNKNOWN";
+
     if (status === 401) {
-      localStorage.removeItem(config.auth.tokenKey);
       useAuthStore.getState().logout();
-      
-      console.warn("[API] Unauthorized access - logging out.");
+      code = "UNAUTHORIZED";
+    }
+
+    if (status === 403) {
+      code = "FORBIDDEN";
     }
 
     console.error(`[API Error] ${error.response?.status}:`, error.response?.data?.message);
@@ -46,8 +49,7 @@ api.interceptors.response.use(
       error.response?.data?.error ||
       "An unexpected error occurred. Please try again later.";
 
-
-    return Promise.reject(new Error(apiError));
+    return Promise.reject({ code, message: apiError });
   }
 );
 
