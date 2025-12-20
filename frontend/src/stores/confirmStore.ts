@@ -17,6 +17,7 @@ interface ConfirmState {
   hideModal: () => void;
   showModal: (message: string, onConfirm: () => void, actionType?: ActionType) => void;
   skipAction: (action: ActionType) => void;
+  clearActions: () => void;
 }
 
 const useConfirmStore = create<ConfirmState>()(
@@ -43,6 +44,9 @@ const useConfirmStore = create<ConfirmState>()(
           skippedActions: [...(state.skippedActions || []), action],
         }));
       },
+      clearActions: () => {
+        set({ skippedActions: [] });
+      }
     }),
     {
       name: "confirm-store",

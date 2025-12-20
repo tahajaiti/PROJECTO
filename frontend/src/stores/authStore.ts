@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { User } from "../types";
+import useConfirmStore from "./confirmStore";
 
 type UserNoToken = Omit<User, "token">;
 
@@ -25,7 +26,10 @@ export const useAuthStore = create<AuthState>()(
         set({ user: userWithoutToken, token, isAuthenticated: true });
       },
 
-      logout: () => set({ user: null, token: null, isAuthenticated: false }),
+      logout: () => {
+        useConfirmStore.getState().clearActions();
+        set({ user: null, token: null, isAuthenticated: false });
+      },
     }),
     { name: "auth" }
   )
