@@ -1,15 +1,13 @@
 import { CreateProjectRequest, Page, Project, ProjectFilter, UpdateProjectRequest } from "../../types";
+import { toSearchParams } from "../../util/params.util";
 import api from "../client";
 
 const getAll = async (filter?: ProjectFilter, page = 0, size = 10) => {
-  const params = new URLSearchParams();
-
-  params.append("page", String(page));
-  params.append("size", String(size));
-
-  if (filter?.query) {
-    params.append("query", filter.query);
-  }
+  const params = toSearchParams({
+    page,
+    size,
+    ...filter,
+  });
 
   const { data } = await api.get<Page<Project>>(`/v1/projects?${params}`);
   return data;
