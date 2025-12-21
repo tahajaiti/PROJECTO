@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Project } from "../../types";
 import { useCreateProject, useUpdateProject } from "../../hooks/useProject";
+import { FaTimes } from "react-icons/fa";
 
 const projectSchema = z.object({
     title: z.string().min(1, "Title is required").max(100, "Title is too long"),
@@ -75,9 +76,7 @@ const ProjectModal = ({ isOpen, onClose, project }: ProjectModalProps) => {
                         onClick={handleClose}
                         className="text-zinc-400 hover:text-white transition-colors cursor-pointer"
                     >
-                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                        </svg>
+                        <FaTimes className="w-5 h-5" />
                     </button>
                 </div>
 
