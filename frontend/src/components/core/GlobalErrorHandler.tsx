@@ -24,6 +24,9 @@ export const GlobalErrorHandler = () => {
                 case "FORBIDDEN":
                     navigate("/")
                     break
+                case "NOT_FOUND":
+                    navigate("/not-found")
+                    break
                 default:
                     break
             }

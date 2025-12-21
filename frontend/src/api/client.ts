@@ -31,15 +31,22 @@ api.interceptors.response.use(
   (error: AxiosError<ErrorResponse>) => {
     const status = error.response?.status;
 
-    let code: "UNAUTHORIZED" | "FORBIDDEN" | "UNKNOWN" = "UNKNOWN";
+    let code: "UNAUTHORIZED" | "NOT_FOUND" | "FORBIDDEN" | "UNKNOWN" = "UNKNOWN";
 
-    if (status === 401) {
-      useAuthStore.getState().logout();
-      code = "UNAUTHORIZED";
-    }
-
-    if (status === 403) {
-      code = "FORBIDDEN";
+    switch (status) {
+      case 404:
+        code = "NOT_FOUND";
+        break;
+      case 401:
+        useAuthStore.getState().logout();
+        code = "UNAUTHORIZED";
+        break;
+      case 403:
+        code = "FORBIDDEN";
+        break;
+      default:
+        code = "UNKNOWN";
+        break;
     }
 
     console.error(`[API Error] ${error.response?.status}:`, error.response?.data?.message);
@@ -49,7 +56,12 @@ api.interceptors.response.use(
       error.response?.data?.error ||
       "An unexpected error occurred. Please try again later.";
 
-    return Promise.reject({ code, message: apiError });
+    const validationErrors = error.response?.data?.validationErrors;
+    if (validationErrors) {
+      console.error("Validation Errors:", validationErrors);
+    }
+
+    return Promise.reject({ code, message: apiError, validationErrors });
   }
 );
 
