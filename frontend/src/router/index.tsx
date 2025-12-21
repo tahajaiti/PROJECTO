@@ -6,13 +6,14 @@ import AppLayout from "../layouts/AppLayout";
 import HomePage from "../pages/HomePage";
 import NotFoundPage from "../pages/NotFoundPage";
 import RootLayout from "../layouts/RootLayout";
+import ProjectPage from "../pages/ProjectPage";
 
 export const router = createBrowserRouter([
     {
         element: <RootLayout />,
         children: [
             {
-                element: <AuthLayout />,
+                element: <AuthLayout />, // auth routes
                 children: [
                     { path: "/login", element: <LoginPage /> },
                 ],
@@ -22,9 +23,10 @@ export const router = createBrowserRouter([
                 element: <ProtectedRoute />,
                 children: [
                     {
-                        element: <AppLayout />,
+                        element: <AppLayout />, // main routes
                         children: [
                             { path: "/", element: <HomePage /> },
+                            { path: "/projects/:id", element: <ProjectPage /> },
                         ],
                     },
                 ],
