@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { Project } from "../../types";
+import { ErrorResponse, Project } from "../../types";
 import { useCreateProject, useUpdateProject } from "../../hooks/useProject";
 import { FaTimes } from "react-icons/fa";
 
@@ -22,7 +22,7 @@ interface ProjectModalProps {
 const ProjectModal = ({ isOpen, onClose, project }: ProjectModalProps) => {
     const isEditing = !!project;
 
-    const { register, handleSubmit, reset, formState: { errors } } = useForm<ProjectFormData>({
+    const { register, handleSubmit, reset, setError, formState: { errors } } = useForm<ProjectFormData>({
         resolver: zodResolver(projectSchema),
     });
 
@@ -30,7 +30,11 @@ const ProjectModal = ({ isOpen, onClose, project }: ProjectModalProps) => {
     const updateProject = useUpdateProject();
 
     const isPending = createProject.isPending || updateProject.isPending;
-    const error = isEditing ? updateProject.error : createProject.error;
+    const mutationError = (isEditing ? updateProject.error : createProject.error) as ErrorResponse | null;
+
+    const error = mutationError?.message && !mutationError?.validationErrors
+        ? mutationError.message
+        : null;
 
     useEffect(() => {
         if (isOpen && project) {
@@ -42,6 +46,20 @@ const ProjectModal = ({ isOpen, onClose, project }: ProjectModalProps) => {
             reset({ title: "", description: "" });
         }
     }, [isOpen, project, reset]);
+
+    useEffect(() => {
+        if (mutationError?.validationErrors) {
+            Object.entries(mutationError.validationErrors).forEach(([field, message]) => {
+                const fieldName = field as keyof ProjectFormData;
+                if (fieldName in projectSchema.shape) {
+                    setError(fieldName, {
+                        type: "server",
+                        message: message,
+                    });
+                }
+            });
+        }
+    }, [mutationError, setError]);
 
     const onSubmit = async (data: ProjectFormData) => {
         try {
@@ -82,7 +100,7 @@ const ProjectModal = ({ isOpen, onClose, project }: ProjectModalProps) => {
 
                 {error && (
                     <div className="bg-red-500/10 border border-red-500/30 text-red-400 p-3 rounded-lg mb-4 text-sm">
-                        {error.message || "An error occurred. Please try again."}
+                        {error || "An error occurred. Please try again."}
                     </div>
                 )}
 
