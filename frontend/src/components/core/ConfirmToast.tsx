@@ -33,7 +33,7 @@ const ConfirmToast = memo(() => {
     return (
         <div
             onClick={handleOutsideClick}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm"
+            className="fixed inset-0 z-60 flex items-center justify-center bg-black/60 backdrop-blur-sm"
         >
             <div className="bg-zinc-900 border border-zinc-800 rounded-lg p-6 w-full max-w-md mx-4 shadow-xl">
                 <h2 className="text-white text-lg font-medium mb-2">Are you sure?</h2>
