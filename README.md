@@ -451,7 +451,6 @@ The API is documented using OpenAPI (Swagger). When the backend is running, acce
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| POST | `/api/auth/register` | Register a new user |
 | POST | `/api/auth/login` | Authenticate and receive JWT token |
 | GET | `/api/projects` | Get all projects for authenticated user |
 | POST | `/api/projects` | Create a new project |
