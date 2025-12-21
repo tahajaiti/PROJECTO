@@ -5,6 +5,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
+
 @Data
 @Builder
 @AllArgsConstructor
@@ -18,4 +21,7 @@ public class ProjectDTO {
     private int totalTasks;
     private int completedTasks;
     private double progressPercentage;
+
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 }

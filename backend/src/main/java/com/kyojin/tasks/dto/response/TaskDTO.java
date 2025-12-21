@@ -14,5 +14,7 @@ public class TaskDTO {
     private boolean completed;
     private LocalDateTime dueDate;
     private Long projectId;
+    
     private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 }
