@@ -25,7 +25,7 @@ A full-stack task management application built with Spring Boot and React. This 
 
 Tasks App is a project and task management system that enables users to:
 
-- Register and authenticate securely using JWT tokens
+- Login and authenticate securely using JWT tokens
 - Create and manage multiple projects
 - Create, update, and track tasks within projects
 - Mark tasks as complete with due date tracking
