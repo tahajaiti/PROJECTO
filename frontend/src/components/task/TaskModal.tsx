@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { Task } from "../../types";
+import { ErrorResponse, Task } from "../../types";
 import { format } from "date-fns";
 import { useCreateTask, useUpdateTask } from "../../hooks/useTask";
 import { FaTimes } from "react-icons/fa";
@@ -29,6 +29,7 @@ const TaskModal = ({ isOpen, onClose, projectId, task }: TaskModalProps) => {
         register,
         handleSubmit,
         reset,
+        setError,
         formState: { errors },
     } = useForm<TaskFormData>({
         resolver: zodResolver(taskSchema),
@@ -38,9 +39,13 @@ const TaskModal = ({ isOpen, onClose, projectId, task }: TaskModalProps) => {
     const updateTask = useUpdateTask(projectId);
 
     const isPending = createTask.isPending || updateTask.isPending;
-    const error = isEditing ? updateTask.error : createTask.error;
+    const mutationError = (isEditing ? updateTask.error : createTask.error) as ErrorResponse | null;
 
-    console.log(error);
+
+    const error = mutationError?.message && !mutationError?.validationErrors
+        ? mutationError.message
+        : null;
+
 
     useEffect(() => {
         if (isOpen && task) {
@@ -57,6 +62,20 @@ const TaskModal = ({ isOpen, onClose, projectId, task }: TaskModalProps) => {
             });
         }
     }, [isOpen, task, reset]);
+
+    useEffect(() => {
+        if (mutationError?.validationErrors) {
+            Object.entries(mutationError.validationErrors).forEach(([field, message]) => {
+                const fieldName = field as keyof TaskFormData;
+                if (fieldName in taskSchema.shape) {
+                    setError(fieldName, {
+                        type: "server",
+                        message: message,
+                    });
+                }
+            });
+        }
+    }, [mutationError, setError]);
 
     const onSubmit = async (data: TaskFormData) => {
         try {
@@ -100,7 +119,7 @@ const TaskModal = ({ isOpen, onClose, projectId, task }: TaskModalProps) => {
 
                 {error && (
                     <div className="bg-red-500/10 border border-red-500/30 text-red-400 p-3 rounded-lg mb-4 text-sm">
-                        {error.message || "An error occurred. Please try again."}
+                        {error || "An error occurred. Please try again."}
                     </div>
                 )}
 
@@ -113,8 +132,8 @@ const TaskModal = ({ isOpen, onClose, projectId, task }: TaskModalProps) => {
                             type="text"
                             {...register("title")}
                             className={`w-full px-4 py-2.5 bg-zinc-800/50 border rounded-lg focus:outline-none focus:ring-2 transition-all placeholder:text-zinc-500 ${errors.title
-                                    ? "border-red-500/50 focus:ring-red-500/50 focus:border-red-500"
-                                    : "border-zinc-700 focus:ring-blue-500/50 focus:border-blue-500"
+                                ? "border-red-500/50 focus:ring-red-500/50 focus:border-red-500"
+                                : "border-zinc-700 focus:ring-blue-500/50 focus:border-blue-500"
                                 }`}
                             placeholder="Task title"
                         />
@@ -131,8 +150,8 @@ const TaskModal = ({ isOpen, onClose, projectId, task }: TaskModalProps) => {
                             {...register("description")}
                             rows={3}
                             className={`w-full px-4 py-2.5 bg-zinc-800/50 border rounded-lg focus:outline-none focus:ring-2 transition-all placeholder:text-zinc-500 resize-none ${errors.description
-                                    ? "border-red-500/50 focus:ring-red-500/50 focus:border-red-500"
-                                    : "border-zinc-700 focus:ring-blue-500/50 focus:border-blue-500"
+                                ? "border-red-500/50 focus:ring-red-500/50 focus:border-red-500"
+                                : "border-zinc-700 focus:ring-blue-500/50 focus:border-blue-500"
                                 }`}
                             placeholder="Task description (optional)"
                         />
@@ -149,8 +168,8 @@ const TaskModal = ({ isOpen, onClose, projectId, task }: TaskModalProps) => {
                             type="datetime-local"
                             {...register("dueDate")}
                             className={`w-full px-4 py-2.5 bg-zinc-800/50 border rounded-lg focus:outline-none focus:ring-2 transition-all ${errors.dueDate
-                                    ? "border-red-500/50 focus:ring-red-500/50 focus:border-red-500"
-                                    : "border-zinc-700 focus:ring-blue-500/50 focus:border-blue-500"
+                                ? "border-red-500/50 focus:ring-red-500/50 focus:border-red-500"
+                                : "border-zinc-700 focus:ring-blue-500/50 focus:border-blue-500"
                                 }`}
                         />
                         {errors.dueDate && (
