@@ -40,7 +40,7 @@ const ProjectView = memo(({ isOpen, onClose, onOpen, project }: ProjectViewModal
           <h2 className="text-white text-lg font-medium">Project Details</h2>
           <button
             onClick={onClose}
-            className="text-zinc-400 hover:text-white transition-colors p-1"
+            className="text-zinc-400 hover:text-white transition-colors p-1 cursor-pointer"
             aria-label="Close modal"
           >
             <FaTimes className="w-4 h-4" />
@@ -77,7 +77,7 @@ const ProjectView = memo(({ isOpen, onClose, onOpen, project }: ProjectViewModal
                 <FaBatteryHalf className="w-4 h-4" />
                 <span className="text-sm">Progress</span>
               </div>
-              <p className="text-white text-2xl font-semibold">{percentage}%</p>
+              <p className="text-white text-2xl font-semibold">{percentage.toFixed(2)}%</p>
             </div>
           </div>
 
@@ -98,13 +98,13 @@ const ProjectView = memo(({ isOpen, onClose, onOpen, project }: ProjectViewModal
         <div className="flex justify-end gap-3 p-4 border-t border-zinc-800">
           <button
             onClick={onClose}
-            className="px-4 py-2 text-sm rounded-lg text-zinc-300 hover:bg-zinc-800 transition-colors"
+            className="px-4 py-2 text-sm rounded-lg text-zinc-300 hover:bg-zinc-800 transition-colors cursor-pointer"
           >
             Close
           </button>
           <button
             onClick={handleOpen}
-            className="flex items-center gap-2 px-4 py-2 text-sm rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition-colors"
+            className="flex items-center gap-2 px-4 py-2 text-sm rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition-colors cursor-pointer"
           >
             Open Project
             <FaArrowRight className="w-3 h-3" />
