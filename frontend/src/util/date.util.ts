@@ -17,3 +17,7 @@ export const formatDate = (dateString: string): string => {
 
   return format(date, "MMM d, yyyy");
 };
+
+export const toStartOfDay = (date: string) => `${date}T00:00:00`;
+export const toEndOfDay   = (date: string) => `${date}T23:59:59`;
+

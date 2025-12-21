@@ -13,9 +13,8 @@ export interface Task {
 
 export interface CreateTaskRequest {
     title: string;
-    description: string;
+    description?: string;
     dueDate: string;
-    projectId: number;
 }
 
 export interface UpdateTaskRequest {
@@ -23,4 +22,11 @@ export interface UpdateTaskRequest {
     description?: string;
     dueDate?: string;
     completed?: boolean;
+}
+
+export interface TaskFilter {
+    query?: string;
+    completed?: boolean;
+    dueDateFrom?: string;
+    dueDateTo?: string;
 }
