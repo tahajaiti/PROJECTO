@@ -7,6 +7,7 @@ A full-stack task management application built with Spring Boot and React. This 
 ## Table of Contents
 
 - [Overview](#overview)
+- [Demo Video Link](#demo-video-link)
 - [Tech Stack](#tech-stack)
 - [Project Structure](#project-structure)
 - [Architecture Overview](#architecture-overview)
@@ -31,6 +32,11 @@ Tasks App is a project and task management system that enables users to:
 - Mark tasks as complete with due date tracking
 
 The application follows a clean architecture pattern with a RESTful API backend and a modern React frontend.
+
+---
+
+## Demo Video Link
+[![Tasks App Demo](https://img.youtube.com/vi/1C8DkJnKcAILvQHpqe_4-WZJ77nom0cRW/0.jpg)](https://drive.google.com/file/d/1C8DkJnKcAILvQHpqe_4-WZJ77nom0cRW/view?usp=sharing)
 
 ---
 
