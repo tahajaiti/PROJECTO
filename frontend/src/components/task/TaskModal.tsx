@@ -52,16 +52,17 @@ const TaskModal = ({ isOpen, onClose, projectId, task }: TaskModalProps) => {
             reset({
                 title: task.title,
                 description: task.description || "",
-                dueDate: format(new Date(task.dueDate), "yyyy-MM-dd"),
+                dueDate: format(new Date(task.dueDate), "yyyy-MM-dd'T'HH:mm"),
             });
         } else if (isOpen) {
             reset({
                 title: "",
                 description: "",
-                dueDate: format(new Date(), "yyyy-MM-dd"),
+                dueDate: format(new Date(), "yyyy-MM-dd'T'HH:mm"),
             });
         }
     }, [isOpen, task, reset]);
+
 
     useEffect(() => {
         if (mutationError?.validationErrors) {
