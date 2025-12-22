@@ -6,6 +6,7 @@ const getAll = async (filter?: ProjectFilter, page = 0, size = 10) => {
   const params = toSearchParams({
     page,
     size,
+    sort: "createdAt,DESC",
     ...filter,
   });
 
